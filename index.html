@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contador Inter 2026 - Live</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800&display=swap" rel="stylesheet">
+    
+    <style>
+        /* --- CSS (Aparência) --- */
+        
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden; /* Evita barras de rolagem */
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            /* 1. ADICIONANDO A SUA IMAGEM COMO BACKGROUND */
+            background-image: url('fundo contador.png'); /* Nome do arquivo na pasta */
+            
+            /* 2. CONFIGURAÇÕES PARA TELA CHEIA */
+            background-position: center center; /* Centraliza a imagem */
+            background-repeat: no-repeat;       /* Não repete a imagem */
+            background-size: cover;             /* Preenche toda a tela (pode cortar bordas) */
+            /* Se preferir que a imagem apareça inteira sem cortes, use 'contain' acima, 
+               mas pode deixar bordas pretas dependendo da tela. 'cover' é melhor para Kiosk. */
+            
+            /* 3. ALINHAMENTO DO NÚMERO */
+            display: flex;
+            justify-content: center; /* Centraliza horizontalmente */
+            align-items: center;     /* Centraliza verticalmente */
+            background-color: #000; /* Fundo de segurança se a imagem falhar */
+        }
+
+        /* Estilização exclusiva do número do contador */
+        #days {
+            font-size: 15rem; /* Tamanho gigantesco para ocupar o centro */
+            color: #ffffff;   /* Cor branca para contrastar com o fundo escuro */
+            line-height: 1;
+            font-weight: 800;
+            
+            /* Sombra sutil para dar profundidade contra o padrão de ondas */
+            text-shadow: 0px 4px 20px rgba(0, 0, 0, 0.8);
+            
+            /* Ajuste fino de posição: a área vazia da imagem é um pouco acima do centro real.
+               Movemos o número um pouco para cima. */
+            transform: translateY(-10%); 
+        }
+
+        /* Responsividade para telas menores (Tablets/Celulares) */
+        @media (max-width: 768px) {
+            #days {
+                font-size: 8rem; /* Diminui o número em telas pequenas */
+                transform: translateY(-15%);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div>
+        <span id="days">000</span>
+    </div>
+
+    <script>
+        // Define a data alvo: 19 de Novembro de 2026
+        // Certifique-se de que o ano está correto para o seu evento.
+        const targetDate = new Date("November 19, 2026 00:00:00").getTime();
+
+        const timer = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = targetDate - now;
+
+            // Cálculo simples de dias
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            
+            // Injeta o número dinâmico no HTML
+            document.getElementById("days").innerHTML = days;
+
+            // Se a data chegar
+            if (distance < 0) {
+                clearInterval(timer);
+                document.getElementById("days").innerHTML = "0";
+            }
+        }, 1000);
+    </script>
+
+</body>
+</html>
